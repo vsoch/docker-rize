@@ -6,7 +6,7 @@ FROM docker:18.06.3-ce-git
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
-ENV R_BASE_VERSION 3.4.2
+ENV R_BASE_VERSION 3.5.2
 
 RUN apk add --no-cache bzip2-dev ca-certificates curl-dev pcre-dev perl readline-dev xz-dev zlib-dev autoconf automake gfortran \
     && apk add --no-cache libc-dev g++ make \

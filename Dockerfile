@@ -103,18 +103,14 @@ RUN curl -O https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz && \
     AWK=/usr/bin/awk \
     CFLAGS="-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g" \
     CXXFLAGS="-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g" \
-
-## Configure options
   ./configure --enable-R-shlib \
                --enable-memory-profiling \
                --with-readline \
                --with-blas \
                --with-tcltk \
                --disable-nls \
-               --with-recommended-packages
-
-## Build and install
-RUN make && \
+               --with-recommended-packages && \
+  make && \
   make install && \
   echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site &&  \
   mkdir -p /usr/local/lib/R/site-library &&  \
@@ -130,7 +126,7 @@ RUN make && \
   echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site
 
 RUN Rscript -e "install.packages(c('littler', 'docopt'), repo = '$MRAN')" && \
-  mkdir -p '/usr/share/man/man1/ && \
+  mkdir -p /usr/share/man/man1/ && \
   ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r && \
   ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r && \
   ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r

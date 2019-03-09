@@ -148,7 +148,7 @@ RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION 
     rm -rf /var/lib/apt/lists/*
 
 RUN Rscript -e "install.packages('remotes', repos = 'http://cran.us.r-project.org')" && \
-    Rscript -e "remotes::install_github('cole-brokamp/rize')" && \
+    Rscript -e "remotes::install_github('researchapps/rize@add/dockerize-arguments')" && \
     docker --version
 
 CMD ["Rscript", "-e", "rize::shiny_dockerize()"]

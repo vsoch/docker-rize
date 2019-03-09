@@ -1,6 +1,6 @@
 FROM tianon/docker-tianon
 
-# docker build -t vanessa/docker-r .
+# docker build -t vanessa/docker-rize .
 # compiled from https://hub.docker.com/r/rocker/r-ver
 #               https://hub.docker.com/r/rocker/shiny
 
@@ -16,6 +16,7 @@ ENV R_VERSION=${R_VERSION:-3.5.2} \
     TERM=xterm
 
 RUN apt update && \
+    mkdir -p /usr/share/man/man1 && \
     apt install -y --no-install-recommends \
     bash-completion \
     ca-certificates \
@@ -129,13 +130,13 @@ RUN make && \
   echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site
 
 RUN Rscript -e "install.packages(c('littler', 'docopt'), repo = '$MRAN')" && \
+  mkdir -p '/usr/share/man/man1/ && \
   ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r && \
   ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r && \
   ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r
 
 # Download and install shiny server
-RUN mkdir -p /usr/share/man/man1 && \
-    wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION -O "version.txt" && \
+RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION -O "version.txt" && \
     VERSION=$(cat version.txt)  && \
     wget --no-verbose "https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
     gdebi -n ss-latest.deb && \

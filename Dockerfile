@@ -4,6 +4,8 @@ FROM rocker/shiny:3.5.2
 # compiled from https://hub.docker.com/r/rocker/r-ver
 #               https://hub.docker.com/r/rocker/shiny
 
+ENV DEBIAN_FRONTEND noninteractive
+
 COPY --from=docker:18.09.3 /usr/local/bin/docker /usr/local/bin/
 RUN apt update && apt install -y openssl libssl-dev && \
      Rscript -e "install.packages('remotes', repos = 'http://cran.us.r-project.org')" && \

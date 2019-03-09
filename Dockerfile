@@ -7,7 +7,7 @@ FROM rocker/shiny:3.5.2
 ENV DEBIAN_FRONTEND noninteractive
 
 COPY --from=docker:18.09.3 /usr/local/bin/docker /usr/local/bin/
-RUN apt update && apt install -y openssl libssl-dev && \
+RUN apt update && apt install -y openssl libssl-dev git && \
      Rscript -e "install.packages('remotes', repos = 'http://cran.us.r-project.org')" && \
      Rscript -e "remotes::install_github('cole-brokamp/rize')" && \
      docker --version
